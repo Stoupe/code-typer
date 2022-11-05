@@ -23,11 +23,11 @@ const Home: NextPage = () => {
       if (codeSnippet[input.length] === "\n") {
         if (evt.key === "Enter") {
           // Look for the number of spaces at the start of the next line and automatically add them
-          const numSpaces = codeSnippet
-            .slice(input.length + 1)
-            .match(/^(\ +)/)?.[0].length;
+          const numSpaces =
+            codeSnippet.slice(input.length + 1).match(/^(\ +)/)?.[0]?.length ??
+            0;
 
-          return input + "\n" + " ".repeat(numSpaces ?? 0);
+          return input + "\n" + " ".repeat(numSpaces);
         }
       }
 
