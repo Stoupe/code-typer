@@ -52,7 +52,7 @@ const Home: NextPage = () => {
       document.removeEventListener("keydown", onInput);
       hljs.unregisterLanguage("typescript");
     };
-  }, [codeSnippet]);
+  }, [codeSnippet]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [input, setInput] = useState("");
 
