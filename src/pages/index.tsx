@@ -93,7 +93,29 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex min-h-screen w-full flex-col p-4">
-        <div className="mb-4 flex w-full items-center gap-2 rounded-xl bg-gray-700 p-2">
+        <div className="my-auto flex h-full items-center justify-center">
+          <div className="flex w-fit rounded-xl bg-gray-700 p-6">
+            <pre>
+              <code className="language-typescript">
+                {codeSnippet?.toString()}
+              </code>
+            </pre>
+            <pre className="absolute p-4">
+              <code className="nohighlight border-grey-400 animate-pulse border-r-2 border-solid bg-emerald-400 bg-opacity-10 text-transparent transition-all">
+                {codeSnippet
+                  ?.toString()
+                  .split("")
+                  .slice(0, input.length)
+                  .map((char, i) => (
+                    // zero width space to move the fake 'cursor' to the beginning of the next line
+                    <span key={i}>{char === "\n" ? char + "​" : char}</span>
+                  ))}
+              </code>
+            </pre>
+          </div>
+        </div>
+
+        <div className="flex w-full items-center gap-2 rounded-xl bg-gray-700 p-2">
           <div
             className={`${
               hasStartedTyping
@@ -122,28 +144,6 @@ const Home: NextPage = () => {
           >
             New
           </button>
-        </div>
-
-        <div className="my-auto flex h-full items-center justify-center">
-          <div className="flex w-fit rounded-xl bg-gray-700 p-6">
-            <pre>
-              <code className="language-typescript">
-                {codeSnippet?.toString()}
-              </code>
-            </pre>
-            <pre className="absolute p-4">
-              <code className="nohighlight border-grey-400 animate-pulse border-r-2 border-solid bg-emerald-400 bg-opacity-10 text-transparent transition-all">
-                {codeSnippet
-                  ?.toString()
-                  .split("")
-                  .slice(0, input.length)
-                  .map((char, i) => (
-                    // zero width space to move the fake 'cursor' to the beginning of the next line
-                    <span key={i}>{char === "\n" ? char + "​" : char}</span>
-                  ))}
-              </code>
-            </pre>
-          </div>
         </div>
       </main>
     </>
