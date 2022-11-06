@@ -58,6 +58,31 @@ const Home: NextPage = () => {
   }, [codeSnippet]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [input, setInput] = useState("");
+  const [currentTime, setCurrentTime] = useState(0);
+  const [cps, setCps] = useState(0);
+  const [hasStartedTyping, setHasStartedTyping] = useState(false);
+
+  useEffect(() => {
+    if (!hasStartedTyping && input.length === 1) {
+      setHasStartedTyping(true);
+    }
+
+    if (hasStartedTyping && input.length === codeSnippet?.length) {
+      setHasStartedTyping(false);
+    }
+  }, [input, codeSnippet, hasStartedTyping]);
+
+  useEffect(() => {
+    if (!hasStartedTyping) return;
+
+    const interval = setInterval(() => {
+      setCurrentTime((time) => time + 0.01);
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, [hasStartedTyping]);
+
+  if (!codeSnippet) return null;
 
   return (
     <>
@@ -68,35 +93,57 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
-        <div className="mb-4">
+        <div className="mb-4 flex w-full items-center gap-2 rounded-xl bg-gray-700 p-2">
+          <div
+            className={`${
+              hasStartedTyping
+                ? "badge-info"
+                : input.length > 0
+                ? "badge-success"
+                : "badge-warning"
+            } badge`}
+          >
+            {hasStartedTyping
+              ? "Typing"
+              : input.length > 0
+              ? "Finished"
+              : "Not Started"}
+          </div>
+          {/* <div className="badge">CPS: {cps}</div> */}
+          <div className="badge mr-auto">Time: {currentTime.toFixed(2)}</div>
+
           <button
             className="btn"
             onClick={() => {
               refetch();
+              setCurrentTime(0);
+              setHasStartedTyping(false);
             }}
           >
             New
           </button>
         </div>
 
-        <div className="flex rounded-xl bg-gray-700 p-6">
-          <pre>
-            <code className="language-typescript">
-              {codeSnippet?.toString()}
-            </code>
-          </pre>
-          <pre className="absolute p-4">
-            <code className="nohighlight border-grey-400 animate-pulse border-r-2 border-solid bg-yellow-100 bg-opacity-10 text-transparent transition-all">
-              {codeSnippet
-                ?.toString()
-                .split("")
-                .slice(0, input.length)
-                .map((char, i) => (
-                  // zero width space to move the fake 'cursor' to the beginning of the next line
-                  <span key={i}>{char === "\n" ? char + "​" : char}</span>
-                ))}
-            </code>
-          </pre>
+        <div className="flex w-full justify-center">
+          <div className="flex w-fit rounded-xl bg-gray-700 p-6">
+            <pre>
+              <code className="language-typescript">
+                {codeSnippet?.toString()}
+              </code>
+            </pre>
+            <pre className="absolute p-4">
+              <code className="nohighlight border-grey-400 animate-pulse border-r-2 border-solid bg-emerald-400 bg-opacity-10 text-transparent transition-all">
+                {codeSnippet
+                  ?.toString()
+                  .split("")
+                  .slice(0, input.length)
+                  .map((char, i) => (
+                    // zero width space to move the fake 'cursor' to the beginning of the next line
+                    <span key={i}>{char === "\n" ? char + "​" : char}</span>
+                  ))}
+              </code>
+            </pre>
+          </div>
         </div>
       </main>
     </>
