@@ -92,7 +92,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+      <main className="flex min-h-screen w-full flex-col p-4">
         <div className="mb-4 flex w-full items-center gap-2 rounded-xl bg-gray-700 p-2">
           <div
             className={`${
@@ -124,7 +124,7 @@ const Home: NextPage = () => {
           </button>
         </div>
 
-        <div className="flex w-full justify-center">
+        <div className="my-auto flex h-full items-center justify-center">
           <div className="flex w-fit rounded-xl bg-gray-700 p-6">
             <pre>
               <code className="language-typescript">
