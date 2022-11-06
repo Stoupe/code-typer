@@ -8,9 +8,12 @@ import "highlight.js/styles/atom-one-dark.css";
 import Head from "next/head";
 
 const Home: NextPage = () => {
-  const { data: codeSnippet } = trpc.code.getSnippet.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-  });
+  const { data: codeSnippet, refetch } = trpc.code.getSnippet.useQuery(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const onInput = (evt: KeyboardEvent) => {
     if (!codeSnippet) return;
@@ -65,6 +68,17 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+        <div className="mb-4">
+          <button
+            className="btn"
+            onClick={() => {
+              refetch();
+            }}
+          >
+            New
+          </button>
+        </div>
+
         <div className="flex rounded-xl bg-gray-700 p-6">
           <pre>
             <code className="language-typescript">
@@ -78,9 +92,8 @@ const Home: NextPage = () => {
                 .split("")
                 .slice(0, input.length)
                 .map((char, i) => (
-                  <span key={i} className="">
-                    {char}
-                  </span>
+                  // zero width space to move the fake 'cursor' to the beginning of the next line
+                  <span key={i}>{char === "\n" ? char + "​" : char}</span>
                 ))}
             </code>
           </pre>

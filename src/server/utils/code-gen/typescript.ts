@@ -32,7 +32,7 @@ const functionGenerator = (
       break;
   }
 
-  allLines.push(...lines.map((line) => `  ${line}`));
+  allLines.push(...lines.map((line) => (line ? `  ${line}` : "")));
   allLines.push("};");
 
   return allLines.join("\n");
