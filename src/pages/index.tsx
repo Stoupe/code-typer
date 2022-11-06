@@ -142,7 +142,7 @@ const Home: NextPage = () => {
               setHasStartedTyping(false);
             }}
           >
-            New
+            Generate New
           </button>
         </div>
       </main>
