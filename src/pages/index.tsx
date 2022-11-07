@@ -59,7 +59,6 @@ const Home: NextPage = () => {
 
   const [input, setInput] = useState("");
   const [currentTime, setCurrentTime] = useState(0);
-  const [cps, setCps] = useState(0);
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
 
   useEffect(() => {
