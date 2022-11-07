@@ -131,7 +131,10 @@ const Home: NextPage = () => {
               ? "Finished"
               : "Not Started"}
           </div>
-          {/* <div className="badge">CPS: {cps}</div> */}
+          <div className="badge">
+            CPS:{" "}
+            {input.length > 0 ? (input.length / currentTime).toFixed(2) : 0}
+          </div>
           <div className="badge mr-auto">Time: {currentTime.toFixed(2)}</div>
 
           <button
